@@ -55,13 +55,12 @@ public class BookController {
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         Book book = bookService.getBookById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
         model.addAttribute("book", book);
         model.addAttribute("categories", categoryService.getAllCategories());
         return "book/edit";
     }
 
-    // Process the form submission for an updated book
     @PostMapping("/edit/{id}")
     public String updateBook(@PathVariable Long id, @Valid @ModelAttribute("book") Book book, BindingResult result, Model model) {
         if (result.hasErrors()) {

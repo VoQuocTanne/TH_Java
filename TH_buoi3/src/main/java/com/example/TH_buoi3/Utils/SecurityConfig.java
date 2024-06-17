@@ -39,14 +39,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers( "/css/**", "/js/**", "/", "/register", "/error")
-                        .permitAll()
-                        .requestMatchers( "/books/edit", "/books/delete","/books/add")
-                        .hasAnyAuthority("ADMIN")
-                        .requestMatchers("/books")
-                        .hasAnyAuthority("ADMIN", "USER")
-                        .requestMatchers("/api/**")
-                        .hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/css/**", "/js/**", "/", "/register", "/error").permitAll()
+                        .requestMatchers("/books/edit/**", "/books/delete/**", "/books/add/**").hasAuthority("ADMIN")
+                        .requestMatchers("/books/**").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/api/**").hasAnyAuthority("ADMIN", "USER")
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout.logoutUrl("/logout")
