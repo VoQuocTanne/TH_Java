@@ -63,9 +63,9 @@ public class BookController {
 
     // Process the form submission for an updated book
     @PostMapping("/edit/{id}")
-    public String updateBook(@ModelAttribute("book") Book book, BindingResult result, Model model) {
+    public String updateBook(@PathVariable Long id, @Valid @ModelAttribute("book") Book book, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("categories",categoryService.getAllCategories());
+            model.addAttribute("categories", categoryService.getAllCategories());
             return "book/edit";
         }
         bookService.updateBook(book);
